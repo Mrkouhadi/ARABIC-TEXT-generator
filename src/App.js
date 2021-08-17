@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React, { useState } from 'react';
+import data from './data/data'; 
 function App() {
+  const [count, setCount] = useState(0)
+  const [text, setText] = useState([]);
+
+  const handleSubmit = (e)=>{
+      e.preventDefault();
+      setText(data.slice(0, +count));
+    }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  <section className="section-center">
+    <h3>: حدد عدد الفقرات للحصول على نص عربي</h3>
+    <form className="lorem-form" onSubmit={handleSubmit}>
+        <button type="submit" className="btn"> إنشاء</button>
+        <input type="number" value={count} onChange={(e)=>setCount(e.target.value)} name="amount" id="amount" min="0" max='10'/>
+        <label htmlFor="amount">:عدد الفقرات</label>
+    </form>
+    <article className="lorem-text">
+      {
+        text.map((item, indx)=>{
+          return <p key={indx} >{item}</p>
+        })
+      }
+    </article>
+  </section>
+
+    )
 }
 
 export default App;
